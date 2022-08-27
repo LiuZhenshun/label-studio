@@ -68,7 +68,15 @@ def create_file_upload(request, project, file):
             instance.file.seek(0)
             instance.file.write(clean_xml)
             instance.file.truncate()
+    from face_detection.face_detection import face_detection_image
+    # face_detection(path)
+    from label_studio.core.utils.io import get_data_dir
     instance.save()
+
+    # path = os.path.join('/home/hkuit164/.local/share/label-studio/media',instance.url[6:])
+    path = os.path.join(get_data_dir(), 'media', instance.url[6:])
+    face_detection_image(path)
+
     return instance
 
 
